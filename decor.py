@@ -1,55 +1,30 @@
 import re
 
 
-sentence = "It is a sentence with a repeating 'a'. And a couple more words."
+SENTENCE = "It is a sentence with a repeating 'a'. And a couple more words."
 
 def preparation(arg):
-    rem_non_alph = re.compile("[^a-zA-Z ]")
-    upd_sent = rem_non_alph.sub("", arg) # delete non-alphabetical chars
-    upd_sent = upd_sent.lower() # to count unique words (e.g. A == a)
-    global splitting
-    splitting = upd_sent.split() # the list with words to count them
-    global counts
-    counts = []
-    global rem_repeat
-    rem_repeat = list(dict.fromkeys(splitting)) # remove repeats
+    """Removing special characters from string"""
+    estr = re.sub("[^a-zA-Z ]","", arg).lower().split()
+    return estr
 
-preparation(sentence)
-
-def decorator(key, value):
-    def inner_func(func):
+def decorator(darg):
+    """Checking a counter work"""
+    def inner(func):
         def checker(arg):
-            counts = {}
-            for i,n in zip(key, value):
-               counts[i]=n
-            if counts == func(arg):
-                return func
-            return print("Strings' word count don't equal.")
+            test_dict = {}
+            for i in set(darg):
+                test_dict[i] = int(darg.count(i))
+            assert test_dict == func(arg), "Strings aren't equal"
         return checker
-    return inner_func
+    return inner
 
-@decorator(rem_repeat, [splitting.count(i) for i in rem_repeat])
+@decorator(preparation(SENTENCE))
 def counting(arg):
+    """Counting words for sentence"""
     words = {}
-    words_list = []
-    uniq = len(rem_repeat)
-    for i in rem_repeat:
-        words[i]=int(splitting.count(i))
-    print(arg)
-    for key, value in words.items():
-        words_list.append(value)
-        if value == 1:
-            print(f"Appears 1 time: '{key}'")
-        else:
-            print(f"Appears {value} times: '{key}'")
-    total = sum(words_list)
-    if total == 1:
-        print("Only: 1 word.")
-    else:
-        print("Total:", total, "words.")
-
-    print("Unique words:", str(uniq) + ".")
+    for i in preparation(arg):
+        words[i] = words[i] + 1 if i in words else 1
     return words
 
-counting(sentence)
-
+counting(SENTENCE)
