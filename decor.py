@@ -29,5 +29,3 @@ def counting(arg):
 
 counting(SENTENCE)
 
-# Just add this line to push via git
-
