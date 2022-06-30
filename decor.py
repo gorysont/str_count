@@ -29,5 +29,4 @@ def counting(arg):
 
 counting(SENTENCE)
 
-# wanna check git pull
-
+# add new entry for git pull checking
