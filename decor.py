@@ -29,5 +29,9 @@ def counting(arg):
 
 counting(SENTENCE)
 
+<<<<<<< HEAD
 # let's try to change file here and there
 
+=======
+# add new entry
+>>>>>>> 1f10e68d6e76a10779a032fe1345d2b95bf86184
